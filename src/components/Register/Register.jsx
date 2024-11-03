@@ -1,9 +1,11 @@
 import { createUserWithEmailAndPassword } from 'firebase/auth/cordova';
 import auth from '../../firebase/firebase.config';
 import { useState } from 'react';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 const Register = () => {
   const [registerError, setRegisterError] = useState('')
-  const [success, setSuccess] =useState('')
+  const [success, setSuccess] = useState('')
+  const [showPassword, setShowPassword] =useState(false)
   const handleRegister = e => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -12,7 +14,11 @@ const Register = () => {
     setRegisterError(''),
       setSuccess('');
     if (password.length < 6) {
-      setRegisterError('Password should be at least 6 characters ')
+      setRegisterError('Password should be at least 6 characters or longer ')
+      return;
+    }
+    else if(!/[A-Z]/.test(password)){
+      setRegisterError('password should have at least one uppercase character.')
       return;
     }
     createUserWithEmailAndPassword(auth, email, password)
@@ -43,11 +49,16 @@ const Register = () => {
           <input
             className="mb-4 w-3/4 py-2 px-4"
             placeholder="Enter your Password"
-            type="password"
+            type={showPassword ?"text" : "password"}
             name="password"
             required
             id=""
           />
+          <span onClick={() => setShowPassword(!showPassword)}>
+            {
+              showPassword ? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>
+            }
+          </span>
           <br />
           <input
             className=" btn btn-secondary mb-4 w-3/4"

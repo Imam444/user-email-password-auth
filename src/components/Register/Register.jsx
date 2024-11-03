@@ -1,10 +1,20 @@
+import { createUserWithEmailAndPassword } from 'firebase/auth/cordova';
+import auth from '../../firebase/firebase.config';
 const Register = () => {
-  const handleRegister = (e) => {
+  const handleRegister = e => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     console.log(email, password);
+    createUserWithEmailAndPassword(auth, email, password)
+       .then(result => {
+        console.log(result.user)
+      })
+        .catch(error => {
+        console.error(error)
+      })
   };
+
   return (
     <div>
       <div className="mx-auto md:w-1/2">

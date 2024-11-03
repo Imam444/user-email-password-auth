@@ -1,17 +1,28 @@
 import { createUserWithEmailAndPassword } from 'firebase/auth/cordova';
 import auth from '../../firebase/firebase.config';
+import { useState } from 'react';
 const Register = () => {
+  const [registerError, setRegisterError] = useState('')
+  const [success, setSuccess] =useState('')
   const handleRegister = e => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     console.log(email, password);
+    setRegisterError(''),
+      setSuccess('');
+    if (password.length < 6) {
+      setRegisterError('Password should be at least 6 characters ')
+      return;
+    }
     createUserWithEmailAndPassword(auth, email, password)
        .then(result => {
-        console.log(result.user)
+         console.log(result.user)
+         setSuccess('user create a successful')
       })
         .catch(error => {
-        console.error(error)
+          console.error(error)
+          setRegisterError(error.message)
       })
   };
 
@@ -25,6 +36,7 @@ const Register = () => {
             placeholder="Enter your E-mail "
             type="email"
             name="email"
+            required
             id=""
           />
           <br />
@@ -33,6 +45,7 @@ const Register = () => {
             placeholder="Enter your Password"
             type="password"
             name="password"
+            required
             id=""
           />
           <br />
@@ -42,6 +55,13 @@ const Register = () => {
             value="Register"
           />
         </form>
+        {
+
+          registerError && <p className='text-red-500'>{registerError}</p>
+        }
+        {
+          success && <p className='text-green-500'>{ success}</p>
+        }
       </div>
     </div>
   );

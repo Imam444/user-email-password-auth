@@ -34,22 +34,25 @@ const Register = () => {
         console.log(result.user)
         setSuccess('user create a successful')
 
-        updateProfile(result.user {
-          displayName=name,
-          photoURL="https://example.com/jane-q-user/profile.jpg"
+        updateProfile(result.user, {
+          displayName:name,
+          photoURL:"https://example.com/jane-q-user/profile.jpg"
         })
-          .then(() => {
-            console.log('Profile updated')
+        .then(() => console.log('Profile updated'))
+        .catch(error => {
+          console.log(error)
         })
+      
         sendEmailVerification(result.user)
-          .then(() => {
-            alert('please check your email verify your account ')
-          })
-      })
-      .catch(error => {
-        console.error(error)
-        setRegisterError(error.message)
-      })
+       .then(() => {
+        alert('please check your email verify your account ')
+       })
+     
+       .catch(error => {
+         console.error(error)
+         setRegisterError(error.message)
+       });
+      }) 
   };
 
   return (

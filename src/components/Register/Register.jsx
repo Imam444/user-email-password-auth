@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth/cordova';
 import auth from '../../firebase/firebase.config';
 import { useState } from 'react';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 const Register = () => {
   const [registerError, setRegisterError] = useState('')
   const [success, setSuccess] = useState('')
@@ -68,9 +69,8 @@ const Register = () => {
           <br />
           </div>
           <div className='mb-2'>
-            <input type="checkbox" name="" id="terms" />
-         
-          <label className='ml-2' htmlFor="terms">Accept out <a href="">terms and condition</a></label>
+            <input type="checkbox" name="terms" id="terms" />
+          <label className='ml-2' htmlFor="terms">Accept out <a>terms and condition</a></label>
           </div>
            <br />
           <input
@@ -86,6 +86,7 @@ const Register = () => {
         {
           success && <p className='text-green-500'>{ success}</p>
         }
+        <p>Already have an account? Please<Link to='/login'>Login</Link></p>
       </div>
     </div>
   );

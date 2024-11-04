@@ -62,6 +62,7 @@ const HeroRegister = () => {
                 <button className="btn btn-primary">Login</button>
               </div>
             </form>
+            
           </div>
         </div>
       </div>

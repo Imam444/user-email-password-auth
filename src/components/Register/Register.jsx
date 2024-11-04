@@ -9,8 +9,9 @@ const Register = () => {
   const handleRegister = e => {
     e.preventDefault();
     const email = e.target.email.value;
+    const accepted = e.target.terms.checked
     const password = e.target.password.value;
-    console.log(email, password);
+    console.log(email, password ,accepted);
     setRegisterError(''),
       setSuccess('');
     if (password.length < 6) {
@@ -19,6 +20,10 @@ const Register = () => {
     }
     else if(!/[A-Z]/.test(password)){
       setRegisterError('password should have at least one uppercase character.')
+      return;
+    }
+    else if (!accepted) {
+      setRegisterError('Please accept out terms and condition');
       return;
     }
     createUserWithEmailAndPassword(auth, email, password)
@@ -38,7 +43,7 @@ const Register = () => {
         <h2 className="text-3xl ">Please Register</h2>
         <form onSubmit={handleRegister}>
           <input
-            className="mb-4 w-3/4 py-2 px-4"
+            className="mb-4 w-full py-2 px-4"
             placeholder="Enter your E-mail "
             type="email"
             name="email"
@@ -46,20 +51,28 @@ const Register = () => {
             id=""
           />
           <br />
-          <input
-            className="mb-4 w-3/4 py-2 px-4"
+          <div className='mb-4 relative'>
+            <input
+            className="w-full py-2 px-4"
             placeholder="Enter your Password"
             type={showPassword ?"text" : "password"}
             name="password"
             required
             id=""
           />
-          <span onClick={() => setShowPassword(!showPassword)}>
+          <span className='absolute top-3 right-2' onClick={() => setShowPassword(!showPassword)}>
             {
               showPassword ? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>
             }
           </span>
           <br />
+          </div>
+          <div className='mb-2'>
+            <input type="checkbox" name="" id="terms" />
+         
+          <label className='ml-2' htmlFor="terms">Accept out <a href="">terms and condition</a></label>
+          </div>
+           <br />
           <input
             className=" btn btn-secondary mb-4 w-3/4"
             type="submit"
